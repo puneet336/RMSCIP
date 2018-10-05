@@ -1,0 +1,39 @@
+RMSCIP: Run Multiple Serial Commands In Parallel v0.1
+===========
+USAGE
+===========
+<mpi launcher> <total processes> <process per node>  ./rmscip.py -f <file name having list of commands> -v <verbosity> 
+
+example of running rmscip - 
+	a) Cray Machines (ALPS Scheduler):
+		aprun -n5 -N1 ./rmscip.py -f commands.sh
+	b) OpenMPI/Intel MPI
+		mpirun -n5 -np1 ./rmscip.py -f commands.sh 
+
+example of commands.sh's content-
+
+ls -lrt
+/home/test/runbenchmark.sh 300 true
+gzip /home/test/data1.nc 
+tar -czvf TEST.tar.gz TEST/
+date
+
+
+
+================================
+Command Distribution per Process
+================================
+Atleast 2 processes are required 
+a) If number of commands > number of processes
+	processes        =06
+	commands in file =10
+
+	distribution:
+	Process0 = command0,command1
+	Process1 = command2,command3
+	Process2 = command4,command5
+	Process3 = command6,command7
+	Process4 = command8
+	Process5 = command9
+
+-Puneet Singh(2018)
